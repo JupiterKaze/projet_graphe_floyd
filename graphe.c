@@ -1,38 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-// Définition du type des éléments
-typedef int  TypeElem;
-
-// Structure de matrice dynamique
-typedef struct {
-    int lignes;
-    int colonnes;
-    TypeElem **data;
-} Matrice;
+#include "graphe.h"
 
 // Fonction pour créer une matrice dynamique
 Matrice* creerMatrice(int lignes, int colonnes) {
     Matrice *M = malloc(sizeof(Matrice));
     if (M == NULL) {
-        fprintf("Erreur d'allocation mémoire (structure).\n");
-        exit(EXIT_FAILURE);
+        fprintf(stderr,"Erreur d'allocation mémoire (structure).\n");
+        return NULL; // renvoie null pour specifier l'erreur d'allocation
     }
 
     M->lignes = lignes;
     M->colonnes = colonnes;
 
     // Allocation des lignes
-    M->data = malloc(lignes * sizeof(TypeElem*));
+    M->data = malloc(lignes * sizeof(int*));
     if (M->data == NULL) {
         fprintf(stderr, "Erreur d'allocation mémoire (lignes).\n");
         free(M);
-        exit(EXIT_FAILURE);
+        return NULL;
     }
 
     // Allocation des colonnes pour chaque ligne
     for (int i = 0; i < lignes; i++) {
-        M->data[i] = malloc(colonnes * sizeof(TypeElem));
+        M->data[i] = malloc(colonnes * sizeof(int));
         if (M->data[i] == NULL) {
             fprintf(stderr, "Erreur d'allocation mémoire (colonnes).\n");
             // Libération partielle en cas d’erreur
@@ -40,7 +31,7 @@ Matrice* creerMatrice(int lignes, int colonnes) {
                 free(M->data[k]);
             free(M->data);
             free(M);
-            exit(EXIT_FAILURE);
+            return NULL;
         }
     }
 
