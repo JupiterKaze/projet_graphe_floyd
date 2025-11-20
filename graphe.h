@@ -11,6 +11,8 @@ typedef struct {
 // fonctions d'initialisation et de liberation
 Matrice* creerMatrice(int lignes, int colonnes);
 void libererMatrice(Matrice *M);
+void afficherMatrice(Matrice *M);
+void lireGraphe(Matrice *M, int nb_aretes, FILE *file);
 
 // fonctions de lecture du fichier
 // <prototypes des fonctions de lecture et affichage>
