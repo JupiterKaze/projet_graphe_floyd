@@ -11,7 +11,7 @@ int main()
     fscanf(file, "%d", &nb_aretes);
     printf("%d\n%d\n", nb_sommets, nb_aretes);
     
-    Matrice *M = creerMatrice(nb_sommets, nb_sommets);
+    Matrice *M = creerMatrice(nb_sommets);
     lireGraphe(M, nb_aretes, file);
     afficherMatrice(M);
 

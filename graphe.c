@@ -3,18 +3,17 @@
 #include "graphe.h"
 
 // Fonction pour créer une matrice dynamique
-Matrice* creerMatrice(int lignes, int colonnes) {
+Matrice* creerMatrice(int taille) {
     Matrice *M = malloc(sizeof(Matrice));
     if (M == NULL) {
         fprintf(stderr,"Erreur d'allocation mémoire (structure).\n");
         return NULL; // renvoie null pour specifier l'erreur d'allocation
     }
 
-    M->lignes = lignes;
-    M->colonnes = colonnes;
+    M->taille = taille;
 
     // Allocation des lignes
-    M->data = calloc(lignes, sizeof(int*));
+    M->data = calloc(taille, sizeof(int*));
     if (M->data == NULL) {
         fprintf(stderr, "Erreur d'allocation mémoire (lignes).\n");
         free(M);
@@ -22,8 +21,8 @@ Matrice* creerMatrice(int lignes, int colonnes) {
     }
 
     // Allocation des colonnes pour chaque ligne
-    for (int i = 0; i < lignes; i++) {
-        M->data[i] = calloc(colonnes, sizeof(int));
+    for (int i = 0; i < taille; i++) {
+        M->data[i] = calloc(taille, sizeof(int));
         if (M->data[i] == NULL) {
             fprintf(stderr, "Erreur d'allocation mémoire (colonnes).\n");
             // Libération partielle en cas d’erreur
@@ -42,7 +41,7 @@ Matrice* creerMatrice(int lignes, int colonnes) {
 void libererMatrice(Matrice *M) {
     if (M == NULL) return;
 
-    for (int i = 0; i < M->lignes; i++)
+    for (int i = 0; i < M->taille; i++)
         free(M->data[i]);
     free(M->data);
     free(M);
@@ -54,8 +53,8 @@ void afficherMatrice(Matrice *M) {
         return;
     }
 
-    for (int i = 0; i < M->lignes; i++) {
-        for (int j = 0; j < M->colonnes; j++) {
+    for (int i = 0; i < M->taille; i++) {
+        for (int j = 0; j < M->taille; j++) {
             printf("%d ", M->data[i][j]);
         }
         printf("\n");
