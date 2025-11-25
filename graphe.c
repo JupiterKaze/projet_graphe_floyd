@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "graphe.h"
 
 // Fonction pour créer une matrice dynamique
@@ -47,21 +48,21 @@ void libererMatrice(Matrice *M) {
     free(M);
 }
 
-void afficherMatrice(Matrice *M) {
-    if (M == NULL) {
+void afficherMatrice(Matrice *M){
+    if(M == NULL) {
         printf("Matrice nulle.\n");
         return;
     }
 
-    for (int i = 0; i < M->taille; i++) {
-        for (int j = 0; j < M->taille; j++) {
+    for(int i = 0; i < M->taille; i++){
+        for (int j = 0; j < M->taille; j++){
             printf("%d ", M->data[i][j]);
         }
         printf("\n");
     }
 }
 
-void lireGraphe(Matrice *M, int nb_aretes, FILE *file) {
+void lireGraphe(Matrice *M, int nb_aretes, FILE *file){
     if (M == NULL || file == NULL) return;
 
     int init, term; //Stocke les indices des sommets initiaux et terminaux
@@ -70,4 +71,75 @@ void lireGraphe(Matrice *M, int nb_aretes, FILE *file) {
         fscanf(file, "%d", &term);
         fscanf(file, "%d", &M->data[init][term]);
     }
+}
+
+FILE* choix_graphe(){ // Demande à l'utilisateur de choisir un graphe à charger et renvoie le fichier correspondant
+    FILE* file;
+    bool file_vide = true;
+    int numero;
+    do{
+        printf("Choisissez un graphe à charger (1-13).\n");
+        printf("Entrez le numéro du graphe : ");
+        scanf("%d", &numero);
+        switch (numero)
+        {
+        case 1:
+            file = fopen("graphes_test/graphe_1.txt", "r");
+            file_vide = false;
+            break;
+        case 2:
+            file = fopen("graphes_test/graphe_2.txt", "r");
+            file_vide = false;
+            break;
+        case 3:
+            file = fopen("graphes_test/graphe_3.txt", "r");
+            file_vide = false;
+            break;
+        case 4: 
+            file = fopen("graphes_test/graphe_4.txt", "r");
+            file_vide = false;
+            break;  
+        case 5:
+            file = fopen("graphes_test/graphe_5.txt", "r");
+            file_vide = false;
+            break;
+        case 6:
+            file = fopen("graphes_test/graphe_6.txt", "r");
+            file_vide = false;
+            break;
+        case 7:
+            file = fopen("graphes_test/graphe_7.txt", "r");
+            file_vide = false;
+            break;
+        case 8:
+            file = fopen("graphes_test/graphe_8.txt", "r");
+            file_vide = false;
+            break;  
+        case 9:
+            file = fopen("graphes_test/graphe_9.txt", "r");
+            file_vide = false;          
+            break;
+        case 10:
+            file = fopen("graphes_test/graphe_10.txt", "r");
+            file_vide = false;
+            break;
+        case 11:
+            file = fopen("graphes_test/graphe_11.txt", "r");
+            file_vide = false;
+            break;
+        case 12:
+            file = fopen("graphes_test/graphe_12.txt", "r");
+            file_vide = false;
+            break;  
+        case 13:
+            file = fopen("graphes_test/graphe_13.txt", "r");
+            file_vide = false;
+            break;
+        default:
+            printf("Numéro de graphe invalide.\n");
+            break;
+        }
+    }while(file_vide);
+
+    return file;
 }
