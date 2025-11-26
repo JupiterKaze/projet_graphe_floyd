@@ -15,5 +15,5 @@ void lireGraphe(Matrice *M, int nb_aretes, FILE *file);
 FILE* choix_graphe();
 // fonctions de lecture du fichier
 // <prototypes des fonctions de lecture et affichage>
-
+void plus_court_chemain(Matrice *M);
 #endif

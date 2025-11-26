@@ -34,6 +34,14 @@ Matrice* creerMatrice(int taille) {
             return NULL;
         }
     }
+    //Boucles qui replient toutes les cases ou il n'y a pas de chemains par un équivalent à + infini
+    for(int i = 0; i < M->taille; i++){
+        for(int j = 0; j < M->taille; j++) {
+            if (i != j){
+                M->data[i][j] = 999999;
+            }
+        }
+    }
 
     return M;
 }
@@ -135,6 +143,10 @@ FILE* choix_graphe(){ // Demande à l'utilisateur de choisir un graphe à charge
             file = fopen("graphes_test/graphe_13.txt", "r");
             file_vide = false;
             break;
+        case 14:
+            file = fopen("graphes_test/graphe_14.txt", "r");
+            file_vide = false;
+            break;
         default:
             printf("Numéro de graphe invalide.\n");
             break;
@@ -142,4 +154,17 @@ FILE* choix_graphe(){ // Demande à l'utilisateur de choisir un graphe à charge
     }while(file_vide);
 
     return file;
+}
+
+void plus_court_chemain(Matrice *M){
+    for(int k = 0; k < M->taille; k++){
+        for(int i = 0; i < M->taille; i++){
+            for(int j = 0; j < M->taille; j++){
+                if (M->data[i][j] > M->data[i][k] + M->data[k][j]){
+                    M->data[i][j] = M->data[i][k] + M->data[k][j];
+                }
+            }
+        }
+    }
+    afficherMatrice(M);
 }
