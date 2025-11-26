@@ -10,7 +10,6 @@ int main()
 
     FILE* file = choix_graphe();
     fscanf(file, "%d", &nb_sommets);
-    printf("%d\n",nb_sommets);
     fscanf(file, "%d", &nb_aretes);
 
     Matrice *M = creerMatrice(nb_sommets);

@@ -42,7 +42,7 @@ Matrice* creerMatrice(int taille) {
             }
         }
     }
-
+    printf("\n");
     return M;
 }
 
@@ -61,13 +61,18 @@ void afficherMatrice(Matrice *M){
         printf("Matrice nulle.\n");
         return;
     }
-
     for(int i = 0; i < M->taille; i++){
         for (int j = 0; j < M->taille; j++){
-            printf("%d ", M->data[i][j]);
+            if (M->data[i][j] == 999999){       //évite d'avoir des "999999" dans la matrice d'agacence à l'affichage
+                printf("| %-5s ","+∞ ");
+            }
+            else {
+                printf("| %-3d ", M->data[i][j]);
+            }
         }
-        printf("\n");
+        printf("|\n");
     }
+    printf("\n");
 }
 
 void lireGraphe(Matrice *M, int nb_aretes, FILE *file){
@@ -152,7 +157,7 @@ FILE* choix_graphe(){ // Demande à l'utilisateur de choisir un graphe à charge
             break;
         }
     }while(file_vide);
-
+    printf("\n");
     return file;
 }
 
