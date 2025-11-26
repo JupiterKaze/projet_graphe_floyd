@@ -1,17 +1,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "graphe.h"
+#include <Windows.h>
 
 int main()
 {   
-    FILE *file = fopen("graphes_test/graphe_11.txt", "r");
-    
+    SetConsoleOutputCP(CP_UTF8); // Pour afficher les caractères UTF-8 dans la console Windows
     int nb_sommets, nb_aretes;
+
+    FILE* file = choix_graphe();
     fscanf(file, "%d", &nb_sommets);
     fscanf(file, "%d", &nb_aretes);
-    printf("%d\n%d\n", nb_sommets, nb_aretes);
     
-    Matrice *M = creerMatrice(nb_sommets, nb_sommets);
+    Matrice *M = creerMatrice(nb_sommets);
+    printf("Matrice d'adjacence :\n");
     lireGraphe(M, nb_aretes, file);
     afficherMatrice(M);
 
