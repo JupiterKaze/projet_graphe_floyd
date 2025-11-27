@@ -165,8 +165,10 @@ void plus_court_chemain(Matrice *M){
     for(int k = 0; k < M->taille; k++){
         for(int i = 0; i < M->taille; i++){
             for(int j = 0; j < M->taille; j++){
-                if (M->data[i][j] > M->data[i][k] + M->data[k][j]){
-                    M->data[i][j] = M->data[i][k] + M->data[k][j];
+                if (M->data[i][k] != 999999 && M->data[k][j] != 999999) {
+                    if (M->data[i][j] > M->data[i][k] + M->data[k][j]) {
+                        M->data[i][j] = M->data[i][k] + M->data[k][j];
+                    }
                 }
             }
         }
