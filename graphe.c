@@ -38,7 +38,7 @@ Matrice* creerMatrice(int taille) {
     for(int i = 0; i < M->taille; i++){
         for(int j = 0; j < M->taille; j++) {
             if (i != j){
-                M->data[i][j] = 999999;
+                M->data[i][j] = INF;
             }
         }
     }
@@ -63,7 +63,7 @@ void afficherMatrice(Matrice *M){
     }
     for(int i = 0; i < M->taille; i++){
         for (int j = 0; j < M->taille; j++){
-            if (M->data[i][j] == 999999){       //évite d'avoir des "999999" dans la matrice d'agacence à l'affichage
+            if (M->data[i][j] == INF){       //évite d'avoir des "999999" dans la matrice d'agacence à l'affichage
                 printf("| %-5s ","+∞ ");
             }
             else {
@@ -160,18 +160,38 @@ FILE* choix_graphe(){ // Demande à l'utilisateur de choisir un graphe à charge
     printf("\n");
     return file;
 }
+int ** plus_court_chemain(Matrice *M){
+    
+    int **p = (int**)malloc(sizeof(int*) * M->taille);
+    if(p == NULL) {
+        fprintf(stderr, "Erreur d'allocation mémoire (lignes).\n");
+        return NULL;
+    }
 
-void plus_court_chemain(Matrice *M){
+    for(int i = 0; i < M->taille; i++) {
+        p[i] = (int*)malloc(M->taille * sizeof(int));
+        if(P[i] == NULL) {
+            fprintf(stderr, "Erreur d'allocation mémoire (colonnes).\n");
+            return NULL;
+        }
+        for(int j = 0; j < M->taille; j++) {
+            p[i][j] = i;
+        }
+    }
+
     for(int k = 0; k < M->taille; k++){
         for(int i = 0; i < M->taille; i++){
             for(int j = 0; j < M->taille; j++){
-                if (M->data[i][k] != 999999 && M->data[k][j] != 999999) {
+                if (M->data[i][k] != INF && M->data[k][j] != INF) {
                     if (M->data[i][j] > M->data[i][k] + M->data[k][j]) {
                         M->data[i][j] = M->data[i][k] + M->data[k][j];
+                        p[i][j] = p[k][j];
                     }
                 }
             }
         }
     }
     afficherMatrice(M);
+
+    return p;
 }
