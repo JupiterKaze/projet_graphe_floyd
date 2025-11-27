@@ -15,10 +15,11 @@ int main()
     Matrice *M = creerMatrice(nb_sommets);
     printf("Matrice d'adjacence :\n");
     lireGraphe(M, nb_aretes, file);
-    afficherMatrice(M);
+    afficherMatrice(M->data, M->taille);
 
-    plus_court_chemain(M);
-
+    int** p = plus_court_chemain(M);
+    printf("La matrice de chemin P\n");
+    afficherMatrice(p, M->taille);
     fclose(file);
     return 0;
 }

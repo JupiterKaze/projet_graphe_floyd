@@ -56,18 +56,18 @@ void libererMatrice(Matrice *M) {
     free(M);
 }
 
-void afficherMatrice(Matrice *M){
+void afficherMatrice(int **M, int n){
     if(M == NULL) {
         printf("Matrice nulle.\n");
         return;
     }
-    for(int i = 0; i < M->taille; i++){
-        for (int j = 0; j < M->taille; j++){
-            if (M->data[i][j] == INF){       //évite d'avoir des "999999" dans la matrice d'agacence à l'affichage
+    for(int i = 0; i < n; i++){
+        for (int j = 0; j <n; j++){
+            if (M[i][j] == INF){       //évite d'avoir des "999999" dans la matrice d'agacence à l'affichage
                 printf("| %-5s ","+∞ ");
             }
             else {
-                printf("| %-3d ", M->data[i][j]);
+                printf("| %-3d ", M[i][j]);
             }
         }
         printf("|\n");
@@ -170,7 +170,7 @@ int ** plus_court_chemain(Matrice *M){
 
     for(int i = 0; i < M->taille; i++) {
         p[i] = (int*)malloc(M->taille * sizeof(int));
-        if(P[i] == NULL) {
+        if(p[i] == NULL) {
             fprintf(stderr, "Erreur d'allocation mémoire (colonnes).\n");
             return NULL;
         }
@@ -182,7 +182,7 @@ int ** plus_court_chemain(Matrice *M){
     for(int k = 0; k < M->taille; k++){
         for(int i = 0; i < M->taille; i++){
             for(int j = 0; j < M->taille; j++){
-                if (M->data[i][k] != INF && M->data[k][j] != INF) {
+                if (M->data[i][k] != INF && M->data[k][j] != INF) { // J'ai mis INF comme constante dans graphe.h
                     if (M->data[i][j] > M->data[i][k] + M->data[k][j]) {
                         M->data[i][j] = M->data[i][k] + M->data[k][j];
                         p[i][j] = p[k][j];
@@ -191,7 +191,7 @@ int ** plus_court_chemain(Matrice *M){
             }
         }
     }
-    afficherMatrice(M);
+    afficherMatrice(M->data, M->taille);
 
     return p;
 }

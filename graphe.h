@@ -12,7 +12,7 @@ typedef struct {
 // fonctions d'initialisation et de liberation
 Matrice* creerMatrice(int taille);
 void libererMatrice(Matrice *M);
-void afficherMatrice(Matrice *M);
+void afficherMatrice(int **M, int n);
 void lireGraphe(Matrice *M, int nb_aretes, FILE *file);
 FILE* choix_graphe();
 // fonctions de lecture du fichier
