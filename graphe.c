@@ -14,7 +14,7 @@ Matrice* creerMatrice(int taille) {
     M->taille = taille;
 
     // Allocation des lignes
-    M->data = calloc(taille, sizeof(int*));
+    M->data = (double**)calloc(taille, sizeof(double*));
     if (M->data == NULL) {
         fprintf(stderr, "Erreur d'allocation mémoire (lignes).\n");
         free(M);
@@ -23,7 +23,7 @@ Matrice* creerMatrice(int taille) {
 
     // Allocation des colonnes pour chaque ligne
     for (int i = 0; i < taille; i++) {
-        M->data[i] = calloc(taille, sizeof(int));
+        M->data[i] = (double*)calloc(taille, sizeof(double));
         if (M->data[i] == NULL) {
             fprintf(stderr, "Erreur d'allocation mémoire (colonnes).\n");
             // Libération partielle en cas d’erreur
@@ -56,18 +56,19 @@ void libererMatrice(Matrice *M) {
     free(M);
 }
 
-void afficherMatrice(int **M, int n){
+void afficherMatrice(double **M, int n){
     if(M == NULL) {
         printf("Matrice nulle.\n");
         return;
     }
     for(int i = 0; i < n; i++){
+         printf("|");
         for (int j = 0; j <n; j++){
-            if (M[i][j] == INF){       //évite d'avoir des "999999" dans la matrice d'agacence à l'affichage
-                printf("| %-5s ","+∞ ");
+            if (M[i][j] == INF){       //évite d'avoir des "1#.J" dans la matrice d'agacence à l'affichage
+                printf("%10s ", "+∞");
             }
             else {
-                printf("| %-3d ", M[i][j]);
+                printf("%18.15f ", M[i][j]);
             }
         }
         printf("|\n");
@@ -75,14 +76,14 @@ void afficherMatrice(int **M, int n){
     printf("\n");
 }
 
-void lireGraphe(Matrice *M, int nb_aretes, FILE *file){
+void lireGraphe(Matrice *M, int nb_aretes, FILE *file) {
     if (M == NULL || file == NULL) return;
 
     int init, term; //Stocke les indices des sommets initiaux et terminaux
     for (int i = 0; i < nb_aretes; i++) {
         fscanf(file, "%d", &init);
         fscanf(file, "%d", &term);
-        fscanf(file, "%d", &M->data[init][term]);
+        fscanf(file, "%lf", &M->data[init][term]);
     }
 }
 
@@ -182,7 +183,7 @@ int ** plus_court_chemain(Matrice *M){
     for(int k = 0; k < M->taille; k++){
         for(int i = 0; i < M->taille; i++){
             for(int j = 0; j < M->taille; j++){
-                if (M->data[i][k] != INF && M->data[k][j] != INF) { // J'ai mis INF comme constante dans graphe.h
+                if (M->data[i][k] != INF && M->data[k][j] != INF) { // J'ai mis INF comme constante dans graphe.h   
                     if (M->data[i][j] > M->data[i][k] + M->data[k][j]) {
                         M->data[i][j] = M->data[i][k] + M->data[k][j];
                         p[i][j] = p[k][j];
@@ -191,7 +192,7 @@ int ** plus_court_chemain(Matrice *M){
             }
         }
     }
-    afficherMatrice(M->data, M->taille);
+    // afficherMatrice(M->data, M->taille);
 
     return p;
 }
